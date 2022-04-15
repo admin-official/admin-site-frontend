@@ -24,24 +24,33 @@ export function useAnnouncementDetail(id) {
     });
 }
 
-export async function uploadImage(formData) {
-    const { data } = await axios.post(`${URL}/image`, formData, {
+export async function uploadFiles(files) {
+    const { data } = await axios.post(`${URL}/file`, files, {
         headers: {
             'Content-Type': 'multipart/form-data',
             Authorization:
-                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJybGF0anJ1ZDEyMzIiLCJ1c2VySWQiOiJybGF0anJ1ZDEyMzIiLCJlbWFpbCI6InJsYXRqcnVkMTExQGdtYWlsLmNvbSIsIm5hbWUiOiLquYDshJzqsr0iLCJyb2xlIjoi7ZqM7JuQIiwiaWF0IjoxNjQ5NjEzMjE5LCJleHAiOjE2NDk2OTk2MTl9.Y_CC5zlgnZ6BlA8zUA4ycbCcDdNWneRtwp46NKQ5VxE',
+                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6ImFkbWluIiwibmFtZSI6Iuq0gOumrOyekCIsInJvbGUiOiLqtIDrpqzsnpAiLCJpYXQiOjE2NTAwMzExMDMsImV4cCI6MTY1MDExNzUwM30.annKT5eMMLb5HGSXDsvoXUTihAM_OlY4tRePdgy-BNc',
         },
     });
-    console.log(data);
     return data;
 }
 
-export async function postAnnouncement(formData) {
-    const { data } = await axios.post(`${URL}/announcement`, formData, {
+export async function deleteFile(file) {
+    console.log(file);
+    const { data } = await axios.delete(`${URL}/file`, file, {
         headers: {
-            'Content-Type': 'multipart/form-data',
             Authorization:
-                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJybGF0anJ1ZDEyMzIiLCJ1c2VySWQiOiJybGF0anJ1ZDEyMzIiLCJlbWFpbCI6InJsYXRqcnVkMTExQGdtYWlsLmNvbSIsIm5hbWUiOiLquYDshJzqsr0iLCJyb2xlIjoi7ZqM7JuQIiwiaWF0IjoxNjQ5NjEzMjE5LCJleHAiOjE2NDk2OTk2MTl9.Y_CC5zlgnZ6BlA8zUA4ycbCcDdNWneRtwp46NKQ5VxE',
+                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6ImFkbWluIiwibmFtZSI6Iuq0gOumrOyekCIsInJvbGUiOiLqtIDrpqzsnpAiLCJpYXQiOjE2NTAwNDE2MjAsImV4cCI6MTY1MDEyODAyMH0.a5I4xXDRqzf1zOG5Wk5QTHnhzStV2y4antexMh2jPQI',
+        },
+    });
+    return data;
+}
+
+export async function postAnnouncement(submitData) {
+    const { data } = await axios.post(`${URL}/announcement`, submitData, {
+        headers: {
+            Authorization:
+                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6ImFkbWluIiwibmFtZSI6Iuq0gOumrOyekCIsInJvbGUiOiLqtIDrpqzsnpAiLCJpYXQiOjE2NTAwMzExMDMsImV4cCI6MTY1MDExNzUwM30.annKT5eMMLb5HGSXDsvoXUTihAM_OlY4tRePdgy-BNc',
         },
     });
     return data;
@@ -51,7 +60,7 @@ export async function deleteAnnouncement(id) {
     const { data } = await axios.delete(`${URL}/announcement/${id}`, {
         headers: {
             Authorization:
-                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJybGF0anJ1ZDEyMzIiLCJ1c2VySWQiOiJybGF0anJ1ZDEyMzIiLCJlbWFpbCI6InJsYXRqcnVkMTExQGdtYWlsLmNvbSIsIm5hbWUiOiLquYDshJzqsr0iLCJyb2xlIjoi7ZqM7JuQIiwiaWF0IjoxNjQ5NjEzMjE5LCJleHAiOjE2NDk2OTk2MTl9.Y_CC5zlgnZ6BlA8zUA4ycbCcDdNWneRtwp46NKQ5VxE',
+                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6ImFkbWluIiwibmFtZSI6Iuq0gOumrOyekCIsInJvbGUiOiLqtIDrpqzsnpAiLCJpYXQiOjE2NTAwMzExMDMsImV4cCI6MTY1MDExNzUwM30.annKT5eMMLb5HGSXDsvoXUTihAM_OlY4tRePdgy-BNc',
         },
     });
     return data;
@@ -62,7 +71,7 @@ export async function modifyAnnouncement(formData, id) {
         headers: {
             'Content-Type': 'multipart/form-data',
             Authorization:
-                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJybGF0anJ1ZDEyMzIiLCJ1c2VySWQiOiJybGF0anJ1ZDEyMzIiLCJlbWFpbCI6InJsYXRqcnVkMTExQGdtYWlsLmNvbSIsIm5hbWUiOiLquYDshJzqsr0iLCJyb2xlIjoi7ZqM7JuQIiwiaWF0IjoxNjQ5NjEzMjE5LCJleHAiOjE2NDk2OTk2MTl9.Y_CC5zlgnZ6BlA8zUA4ycbCcDdNWneRtwp46NKQ5VxE',
+                'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6ImFkbWluIiwibmFtZSI6Iuq0gOumrOyekCIsInJvbGUiOiLqtIDrpqzsnpAiLCJpYXQiOjE2NTAwMzExMDMsImV4cCI6MTY1MDExNzUwM30.annKT5eMMLb5HGSXDsvoXUTihAM_OlY4tRePdgy-BNc',
         },
     });
     return data;
@@ -74,7 +83,6 @@ export async function downloadFile(url, fileName) {
             responseType: 'blob',
         })
         .then((res) => {
-            console.log(res.data);
             fileDownload(res.data, fileName);
         });
 }

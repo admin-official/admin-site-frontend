@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable operator-linebreak */
@@ -19,13 +20,16 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
 import * as Styled from './styled';
-import { postAnnouncement, uploadImage } from '../../../../../api';
+import { postAnnouncement, uploadFiles } from '../../../../../api';
+import FileUploadModal from '../../../fileuploadmodal';
 
 function AnnouncementUploadContent() {
     const queryClient = useQueryClient();
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
-
+    const [fileUploadModalVisible, setFileUploadModalVisible] = React.useState(false);
+    const [newlyAddedFiles, setNewlyAddedFiles] = React.useState([]);
+    // console.log(newlyAddedFiles);
     const editorRef = React.useRef();
     React.useEffect(() => {
         if (editorRef.current) {
@@ -33,10 +37,10 @@ function AnnouncementUploadContent() {
             editorRef.current.getInstance().addHook('addImageBlobHook', (blob, callback) => {
                 (async () => {
                     const formData = new FormData();
-                    formData.append('image', blob);
+                    formData.append('files', blob);
 
-                    const url = await uploadImage(formData);
-                    callback(url.data.fileUrl, 'alt text');
+                    const url = await uploadFiles(formData);
+                    callback(url.data[0].fileUrl, `alt ${url.data[0].fileName}`);
                 })();
 
                 return false;
@@ -46,18 +50,20 @@ function AnnouncementUploadContent() {
         return () => {};
     }, [editorRef]);
 
-    const uploadMutation = useMutation((formData) => postAnnouncement(formData), {
+    const uploadMutation = useMutation((submitData) => postAnnouncement(submitData), {
         onSuccess: () => {
             queryClient.invalidateQueries('announcements');
         },
     });
 
     const onSubmit = (data) => {
-        const formData = new FormData();
-        data.file.length && Object.values(data.file).map((file) => formData.append('files', file));
-        formData.append('title', data.title);
-        formData.append('content', editorRef.current.getInstance().getMarkdown());
-        uploadMutation.mutate(formData, {
+        const submitData = {
+            title: data.title,
+            content: editorRef.current.getInstance().getMarkdown(),
+            files: newlyAddedFiles,
+        };
+        // newlyAddedFiles.length && submitData.files = newlyAddedFiles;
+        uploadMutation.mutate(submitData, {
             onSuccess: () => {
                 navigate('/announcement');
             },
@@ -72,19 +78,34 @@ function AnnouncementUploadContent() {
 
     return (
         <Styled.Container>
+            {fileUploadModalVisible && (
+                <FileUploadModal
+                    setFileUploadModalVisible={setFileUploadModalVisible}
+                    setNewlyAddedFiles={setNewlyAddedFiles}
+                />
+            )}
             <form encType='multipart/form-data' onSubmit={handleSubmit(onSubmit, onError)}>
                 <input
                     {...register('title', { required: '제목을 입력해주세요.' })}
                     placeholder='제목을 입력해주세요.'
                     className='title_input'
                 />
-                <input
+                {/* <input
                     type='file'
                     multiple
                     accept='파일 확장자'
                     {...register('file')}
                     className='file_input'
-                />
+                /> */}
+                <span
+                    className='add_file_btn'
+                    aria-hidden='true'
+                    onClick={() => {
+                        setFileUploadModalVisible(!fileUploadModalVisible);
+                    }}
+                >
+                    파일 첨부
+                </span>
                 <div className='content_input'>
                     <Editor
                         placeholder='내용을 입력해주세요.'

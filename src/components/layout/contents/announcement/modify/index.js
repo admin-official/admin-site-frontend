@@ -25,7 +25,7 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 
 import * as Styled from './styled';
-import { useAnnouncementDetail, modifyAnnouncement, uploadImage } from '../../../../../api';
+import { useAnnouncementDetail, modifyAnnouncement, uploadFiles } from '../../../../../api';
 
 function AnnouncementUploadContent(id) {
     const queryClient = useQueryClient();
@@ -46,8 +46,8 @@ function AnnouncementUploadContent(id) {
                     const formData = new FormData();
                     formData.append('image', blob);
 
-                    const url = await uploadImage(formData);
-                    callback(url.data.fileUrl, 'alt text');
+                    const url = await uploadFiles(formData);
+                    callback(url.data[0].fileUrl, `alt ${url.data[0].fileName}`);
                 })();
 
                 return false;

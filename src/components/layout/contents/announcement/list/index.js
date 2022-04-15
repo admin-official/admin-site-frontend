@@ -50,19 +50,19 @@ function AnnouncementList() {
                                                 <span className='announcement_author_name'>{`작성자 ${item.authorName}`}</span>
                                             </div>
                                             {item.content.includes(
-                                                'https://d260rb3auh0wa7.cloudfront.net/image/',
+                                                'https://d260rb3auh0wa7.cloudfront.net/file/',
                                             ) ? (
                                                 <img
                                                     className='item_img'
                                                     alt='image_alt'
                                                     src={item.content.substring(
                                                         item.content.indexOf(
-                                                            'https://d260rb3auh0wa7.cloudfront.net/image/',
+                                                            'https://d260rb3auh0wa7.cloudfront.net/file/',
                                                         ),
                                                         item.content.indexOf(
                                                             ')',
                                                             item.content.indexOf(
-                                                                'https://d260rb3auh0wa7.cloudfront.net/image/',
+                                                                'https://d260rb3auh0wa7.cloudfront.net/file/',
                                                             ),
                                                         ),
                                                     )}
