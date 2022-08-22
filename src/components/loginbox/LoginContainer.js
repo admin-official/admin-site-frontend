@@ -27,8 +27,8 @@ function LoginContainer() {
         <Styled.Container>
             <form onSubmit={handleSubmit(onValid)}>
                 <Styled.Box>
-                    <div>Welcome !</div>
-                    <div>로그인</div>
+                    <h1>Welcome !</h1>
+                    <h2>로그인</h2>
                     {inputList.map((item) => (
                         <div className='inputDiv' key={item.id}>
                             <span>{item.name}</span>

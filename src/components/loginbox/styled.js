@@ -42,11 +42,11 @@ export const Box = styled.div`
     @media screen and (max-width: 767px) {
         width: 90%;
     }
-    div:nth-child(1) {
+    h1 {
         font-size: 24px;
         font-weight: 400;
     }
-    div:nth-child(2) {
+    h2 {
         font-size: 30px;
         font-weight: 500;
         margin-top: 35px;
