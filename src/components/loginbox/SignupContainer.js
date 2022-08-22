@@ -26,6 +26,7 @@ function SignupContainer() {
             fetchSignup(data, navigate, setError);
         }
     };
+
     return (
         <Styled.Container>
             <form onSubmit={handleSubmit(onValid)}>

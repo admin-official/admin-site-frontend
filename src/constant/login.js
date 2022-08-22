@@ -12,6 +12,7 @@ const inputList = [
         errorMsg: 'Password를 입력하세요',
     },
 ];
+
 const signupInputList = [
     {
         name: '이름',
