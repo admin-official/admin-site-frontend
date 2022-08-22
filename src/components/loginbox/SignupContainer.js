@@ -11,7 +11,7 @@ import { signupInputList } from '../../constant/login';
 
 function SignupContainer() {
     const [visible, setVisible] = useState(false);
-    const [visible2, setVisible2] = useState(false);
+    const [secondVisible, setSecondVisible] = useState(false);
     const {
         register,
         handleSubmit,
@@ -30,8 +30,8 @@ function SignupContainer() {
         <Styled.Container>
             <form onSubmit={handleSubmit(onValid)}>
                 <Styled.Box>
-                    <div>Welcome !</div>
-                    <div>회원가입</div>
+                    <h1>Welcome !</h1>
+                    <h2>회원가입</h2>
                     {signupInputList.map((item) => (
                         <div className='inputDiv' key={item.id}>
                             <span>{item.name}</span>
@@ -39,7 +39,7 @@ function SignupContainer() {
                             <Styled.Input
                                 type={
                                     (item.name === 'Password' && !visible) ||
-                                    (item.name === 'Password 확인' && !visible2)
+                                    (item.name === 'Password 확인' && !secondVisible)
                                         ? 'password'
                                         : 'text'
                                 }
@@ -52,8 +52,8 @@ function SignupContainer() {
                                 </Styled.EyeIcon>
                             )}
                             {item.name === 'Password 확인' && (
-                                <Styled.EyeIcon onClick={() => setVisible2((prev) => !prev)}>
-                                    {visible2 ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+                                <Styled.EyeIcon onClick={() => setSecondVisible((prev) => !prev)}>
+                                    {secondVisible ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
                                 </Styled.EyeIcon>
                             )}
                             <Styled.ErrorMsg>{errors[item.id]?.message}</Styled.ErrorMsg>
